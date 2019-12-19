@@ -1,0 +1,65 @@
+[TearDown]  
+
+        public void AfterTest() 
+
+        { 
+
+            var status = TestContext.CurrentContext.Result.Outcome.Status; 
+
+            Console.WriteLine(status); 
+
+            var stacktrace = TestContext.CurrentContext.Result.StackTrace; 
+
+            Console.WriteLine(stacktrace); 
+
+            var errorMessage = TestContext.CurrentContext.Result.Message; 
+
+            Console.WriteLine(errorMessage); 
+
+  
+
+            switch (status) 
+
+            { 
+
+                case TestStatus.Failed: 
+
+                    logger.Log(Status.Fail, "Failed Test"); 
+
+                    CommonMethods commonMethods = new CommonMethods(); 
+
+                    string screenshotPath = commonMethods.CaptureScreenshot(TestContext.CurrentContext.Test.Name); 
+
+                    logger.AddScreenCaptureFromPath(screenshotPath); 
+
+                    break; 
+
+  
+
+                case TestStatus.Skipped: 
+
+                    logger.Log(Status.Skip, "Skipped"); 
+
+                    break; 
+
+  
+
+                case TestStatus.Passed: 
+
+                    logger.Log(Status.Pass, "Passed"); 
+
+                    break; 
+
+  
+
+                default: 
+
+                    logger.Info("Inconclusive Status"); 
+
+                    break; 
+
+            } 
+
+  
+
+        } 
