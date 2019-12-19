@@ -63,3 +63,14 @@
   
 
         } 
+        
+        
+        //take screenshot
+        
+        public string CaptureScreenshot(string screenshotName)
+        {
+            Screenshot screenshot = ((ITakesScreenshot)driver).GetScreenshot();
+            string path = "C:\\Users\\kr\\source\\repos\\PageObjectModel\\PageObjectModel\\Screenshots\\" + screenshotName + ".png";
+            screenshot.SaveAsFile(path, ScreenshotImageFormat.Png);
+            return path;
+        }
