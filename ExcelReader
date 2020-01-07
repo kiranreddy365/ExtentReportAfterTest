@@ -1,19 +1,4 @@
-static void Main(string[] args)
-        {
-            DataTable testData = new DataTable();
-
-            testData.Columns.Add("User");
-            testData.Columns.Add("FName");
-            testData.Columns.Add("LName");
-            testData.Columns.Add("Email");
-            testData.Columns.Add("Mobile");
-            testData.Columns.Add("City");
-            testData.Columns.Add("State");
-            testData.Columns.Add("Country");
-
-            DataRow row;
-
-            Application excelApp = new Application();
+Application excelApp = new Application();
             Workbook excelWorkbook = excelApp.Workbooks.Open(@"D:\Files\Excel files\TestData.xlsx");
             _Worksheet excelSheet = excelWorkbook.Sheets[1];
 
@@ -24,25 +9,26 @@ static void Main(string[] args)
 
             Console.WriteLine("Row Count: " + rowCount + " and Column Count: " + colCount);
 
+            DataTable testData = new DataTable();
+
+            for(int i=1; i<=colCount; i++)
+            {
+                testData.Columns.Add(excelRange.Rows.Cells[1, i].value2);
+                Console.WriteLine(excelRange.Rows.Cells[1, i].value2);
+            }
+
+            DataRow row;
+
             for (int i = 2; i <= rowCount; i++)
             {
                 row = testData.NewRow();
 
-                row["User"] = excelRange.Rows.Cells[i, 1].value2;
-                row["FName"] = excelRange.Rows.Cells[i, 2].value2;
-                row["LName"] = excelRange.Rows.Cells[i, 3].value2;
-                row["Email"] = excelRange.Rows.Cells[i, 4].value2;
-                row["Mobile"] = excelRange.Rows.Cells[i, 5].value2;
-                row["City"] = excelRange.Rows.Cells[i, 6].value2;
-                row["State"] = excelRange.Rows.Cells[i, 7].value2;
-                row["Country"] = excelRange.Rows.Cells[i, 8].value2;
+                for(int j=1; j<=colCount; j++)
+                {
+                    row[excelRange.Rows.Cells[1, j].value2] = excelRange.Rows.Cells[i, j].value2;
+                }
 
                 testData.Rows.Add(row);
             }
             excelWorkbook.Close();
             Console.WriteLine(testData.Rows.Count);
-
-            Console.WriteLine(Pro);
-            
-            Console.ReadKey();
-        }
