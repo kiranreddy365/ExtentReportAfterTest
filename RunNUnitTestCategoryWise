@@ -1,0 +1,123 @@
+Run Nunit Tests Category wise 
+
+ 
+
+using NUnit.Framework; 
+
+using OpenQA.Selenium; 
+
+using OpenQA.Selenium.Chrome; 
+
+using System; 
+
+using System.Collections.Generic; 
+
+using System.Linq; 
+
+using System.Text; 
+
+using System.Threading.Tasks; 
+
+  
+
+namespace NUnitJenkinsTest 
+
+{ 
+
+    public class Class1 
+
+    { 
+
+        IWebDriver driver; 
+
+        string path = TestContext.CurrentContext.TestDirectory; 
+
+        [OneTimeSetUp] 
+
+        public void Setup() 
+
+        { 
+
+            driver = new ChromeDriver(); 
+
+            Console.WriteLine("Setup completed."); 
+
+        } 
+
+  
+
+        [Test, Order(1)] 
+
+        [Category("One")] 
+
+        [Category("All")] 
+
+        public void Test1() 
+
+        { 
+
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30); 
+
+            driver.Navigate().GoToUrl("https://www.autoitscript.com/"); 
+
+            Assert.IsTrue(driver.Title.Contains("Home - AutoIt")); 
+
+            Console.WriteLine(driver.Title); 
+
+            Console.WriteLine("Test1 completed."); 
+
+  
+
+        } 
+
+  
+
+        [Test, Order(2)] 
+
+        [Category("All")] 
+
+        [Category("Two")] 
+
+         
+
+        public void Test2() 
+
+        { 
+
+            driver.Navigate().GoToUrl("https://stackoverflow.com/"); 
+
+            Assert.IsTrue(driver.Title.Contains("Stack Overflow")); 
+
+            Console.WriteLine(driver.Title); 
+
+            Console.WriteLine("Test2 completed."); 
+
+  
+
+        } 
+
+  
+
+        [OneTimeTearDown] 
+
+        public void TearDown() 
+
+        { 
+
+            driver.Quit(); 
+
+            Console.WriteLine("Tear down completed."); 
+
+        } 
+
+    } 
+
+} 
+
+ 
+Command Line command:
+C:\Program Files (x86)\NUnit.org\nunit-console>nunit3-console.exe "D:\Selenium CSharp\NUnitJenkinsTest\NUnitJenkinsTest\bin\Debug\NUnitJenkinsTest.dll" --where "cat==All" 
+
+ 
+
+ 
